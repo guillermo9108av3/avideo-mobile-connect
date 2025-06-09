@@ -1,3 +1,4 @@
+npx cap add android
 name: Build Android APK
 
 on:
