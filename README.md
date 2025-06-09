@@ -1,73 +1,116 @@
-# Welcome to your Lovable project
 
-## Project info
+# AVideo Mobile Connect
 
-**URL**: https://lovable.dev/projects/1c2f3bf7-3419-41df-8f22-aabc03b7db9c
+Una aplicación móvil Android para conectar con tu servidor AVideo local.
 
-## How can I edit this code?
+## Características
 
-There are several ways of editing your application.
+- 🎥 Visualización de videos desde tu servidor AVideo
+- 🔍 Búsqueda de contenido
+- 📱 Interfaz optimizada para móvil
+- 🏠 Configuración de servidor local
+- 📺 Diseño similar a la interfaz web de AVideo
+- 🔄 APIs nativas de AVideo
 
-**Use Lovable**
+## Configuración del Proyecto
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1c2f3bf7-3419-41df-8f22-aabc03b7db9c) and start prompting.
+Este proyecto está configurado con:
+- **React + TypeScript**: Para la interfaz de usuario
+- **Capacitor**: Para la funcionalidad nativa de Android
+- **Tailwind CSS**: Para el diseño
+- **shadcn/ui**: Para componentes de UI
 
-Changes made via Lovable will be committed automatically to this repo.
+## Instalación y Desarrollo
 
-**Use your preferred IDE**
+### Requisitos
+- Node.js 18+
+- Java JDK 17
+- Android Studio (para desarrollo local)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Instalación
+```bash
+# Clonar el repositorio
+git clone <tu-repo-url>
+cd avideo-mobile-connect
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Instalar dependencias
+npm install
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Desarrollo web
 npm run dev
+
+# Preparar para Android
+npm run build
+npx cap add android
+npx cap sync android
+
+# Abrir en Android Studio
+npx cap open android
 ```
 
-**Edit a file directly in GitHub**
+## Compilación Automática
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Este proyecto incluye GitHub Actions para compilación automática:
 
-**Use GitHub Codespaces**
+1. **Push a main**: Genera automáticamente una APK
+2. **Artifacts**: La APK se guarda como artifact en GitHub
+3. **Compatibilidad**: Configurado para JDK 17 (no requiere JDK 21)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Descargar APK
 
-## What technologies are used for this project?
+1. Ve a la pestaña "Actions" en GitHub
+2. Selecciona el workflow más reciente
+3. Descarga el artifact "android-apk"
 
-This project is built with:
+## Configuración del Servidor
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+En la primera ejecución, la app te pedirá:
+- **URL del servidor**: Tu URL de AVideo (ej: `http://192.168.43.100/AVideo-master/`)
+- Esta configuración se guarda localmente en el dispositivo
 
-## How can I deploy this project?
+## Funcionalidades Implementadas
 
-Simply open [Lovable](https://lovable.dev/projects/1c2f3bf7-3419-41df-8f22-aabc03b7db9c) and click on Share -> Publish.
+- ✅ Configuración inicial del servidor
+- ✅ Interfaz de navegación por pestañas
+- ✅ Pantalla de inicio con grid de videos
+- ✅ Página de búsqueda
+- ✅ Página de descargas
+- ✅ Hook personalizado para APIs de AVideo
+- ✅ Compilación automática con GitHub Actions
 
-## Can I connect a custom domain to my Lovable project?
+## APIs de AVideo Integradas
 
-Yes, you can!
+La app se conecta con las siguientes APIs de AVideo:
+- `GET /plugin/API/get.json.php?APIName=video` - Lista de videos
+- `GET /plugin/API/get.json.php?APIName=video&searchPhrase=` - Búsqueda
+- `POST /plugin/API/get.json.php?APIName=login` - Autenticación
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Estructura del Proyecto
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```
+src/
+├── components/          # Componentes reutilizables
+│   ├── ConfigPage.tsx   # Configuración inicial
+│   ├── VideoGrid.tsx    # Grid de videos
+│   ├── SearchPage.tsx   # Búsqueda
+│   └── DownloadsPage.tsx # Descargas
+├── hooks/              # Hooks personalizados
+│   └── useAVideoAPI.ts # Hook para APIs de AVideo
+└── pages/              # Páginas principales
+    └── Index.tsx       # Página principal
+```
+
+## Personalización
+
+Para personalizar la app para tu servidor:
+
+1. Modifica `src/hooks/useAVideoAPI.ts` para ajustar las llamadas a la API
+2. Actualiza `capacitor.config.ts` con tu configuración
+3. Cambia los colores en `src/index.css` si deseas un tema diferente
+
+## Soporte
+
+Para problemas relacionados con:
+- **AVideo**: Consulta la [documentación oficial](https://github.com/WWBN/AVideo)
+- **Capacitor**: Consulta la [documentación de Capacitor](https://capacitorjs.com/)
+- **Esta app**: Abre un issue en este repositorio
