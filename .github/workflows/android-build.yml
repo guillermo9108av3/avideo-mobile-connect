@@ -2,44 +2,45 @@ name: Build Android APK
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
+  pull_request:
 
 jobs:
-  build-android:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'  # versión mínima requerida para capacitor
+        node-version: '20'
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
 
-    - name: Add Android platform if not exists
+    - name: Install Capacitor CLI
+      run: npm install --global @capacitor/cli
+
+    - name: Add Android platform if needed
+      run: npx cap add android || echo "Android exists"
+
+    - name: Ensure Capacitor assets exist
       run: |
-        if [ ! -d "android" ]; then
-          npx cap add android
-        else
-          echo "Android platform already exists"
-        fi
+        mkdir -p android/app/src/main/assets
+        echo '{}' > android/app/src/main/assets/capacitor.config.json
+        echo '{}' > android/app/src/main/assets/capacitor.plugins.json
 
-    - name: Sync Android platform
+    - name: Sync Android
       run: npx cap sync android
 
-    - name: Build APK
-      run: |
-        cd android
-        ./gradlew assembleDebug
+    - name: Build Android APK
+      working-directory: android
+      run: ./gradlew assembleDebug
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug-apk
+        name: avideo-debug-apk
         path: android/app/build/outputs/apk/debug/app-debug.apk
