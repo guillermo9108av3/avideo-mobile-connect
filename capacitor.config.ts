@@ -2,7 +2,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.1c2f3bf7341941df8f22aabc03b7db9c',
+  appId: 'com.lovable.avideo.mobile',
   appName: 'avideo-mobile-connect',
   webDir: 'dist',
   server: {
