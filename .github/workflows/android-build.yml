@@ -33,6 +33,12 @@ jobs:
     - name: Build web app
       run: npm run build
       
+    - name: Initialize Capacitor (if not exists)
+      run: |
+        if [ ! -f "capacitor.config.ts" ]; then
+          npx cap init
+        fi
+      
     - name: Add Android platform
       run: npx cap add android
       
