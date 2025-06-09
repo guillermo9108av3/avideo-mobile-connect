@@ -1,4 +1,4 @@
-npx cap add android
+
 name: Build Android APK
 
 on:
@@ -26,7 +26,7 @@ jobs:
 
       - name: Build web assets
         run: npm run build
-
+npx cap add android
       - name: Install Capacitor Android platform if not exists
         run: |
           if [ ! -d android ]; then
