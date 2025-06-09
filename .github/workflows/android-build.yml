@@ -29,14 +29,14 @@ jobs:
       - name: Capacitor sync
         run: npx cap sync android
 
-      - name: Forzar Java 17 en archivos Gradle
+      - name: Replace Java 21 with 17 in Gradle files
         run: |
-          find android -type f -name "*.gradle" -exec sed -i 's/JavaVersion\.VERSION_21/JavaVersion\.VERSION_17/g' {} +
+          find android -type f -name "*.gradle" -exec sed -i 's/JavaVersion\.VERSION_21/JavaVersion.VERSION_17/g' {} +
+          find android -type f -name "*.gradle" -exec sed -i 's/sourceCompatibility = JavaVersion.VERSION_21/sourceCompatibility = JavaVersion.VERSION_17/g' {} +
+          find android -type f -name "*.gradle" -exec sed -i 's/targetCompatibility = JavaVersion.VERSION_21/targetCompatibility = JavaVersion.VERSION_17/g' {} +
           find android -type f -name "*.gradle" -exec sed -i 's/--release 21/--release 17/g' {} +
-          find android -type f -name "*.gradle" -exec sed -i 's/sourceCompatibility = 21/sourceCompatibility = 17/g' {} +
-          find android -type f -name "*.gradle" -exec sed -i 's/targetCompatibility = 21/targetCompatibility = 17/g' {} +
 
-      - name: Set up JDK 17
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -52,7 +52,7 @@ jobs:
         run: cd android && ./gradlew assembleRelease
 
       - name: Upload APK artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-apks
           path: |
